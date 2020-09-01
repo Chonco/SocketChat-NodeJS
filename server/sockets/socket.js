@@ -43,6 +43,11 @@ io.on('connection', (client) => {
         let persona = usuarios.getPersona(client.id);
         client.broadcast.to(persona.sala).emit('recibirMensaje',
             crearMensaje(persona.nombre, 'Mensaje usuario', data.mensaje));
+        client.emit('mensajeSala', {
+            nombre: persona.nombre,
+            mensaje: data.mensaje,
+            fecha: data.fecha
+        });
     });
 
     client.on('mensajeTodos', (data) => {
